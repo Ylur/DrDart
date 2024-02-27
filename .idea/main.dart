@@ -25,8 +25,8 @@ void main() {
 
 // Exits.
   room1.exits = {'north': room4, 'east': room2};
-  room2.exits = {'south': room3, 'west': room1};
-  room3.exits = {'south': room1, 'east': room4};
+  room2.exits = {'east': room3, 'west': room1};
+  room3.exits = {'west': room1, 'east': room4};
   room4.exits = {'north': room2, 'east': room3};
 
 //
@@ -45,15 +45,22 @@ void main() {
   while (true) {
     print('\n${DrDart.currentRoom.description}');
     stdout.write('Choose your next move (type exit to quit): ');
-    var input = stdin.readLineSync()?.toLowerCase() ?? '';
+    var moveOut = stdin.readLineSync()?.toLowerCase() ?? '';
 
-    if (input == 'exit') {
+    if (moveOut == 'exit') {
       print('I thought so!');
+      break;
+    } else
+    if (moveOut == 'Open door') {
+      print('You opened the door and are outside now!');
       break;
     }
 
-    if (DrDart.currentRoom.exits.containsKey(input)) {
-      DrDart.currentRoom = DrDart.currentRoom.exits[input]!;
+
+
+
+    if (DrDart.currentRoom.exits.containsKey(moveOut)) {
+      DrDart.currentRoom = DrDart.currentRoom.exits[moveOut]!;
     } else {
       print('Invalid move. Try again.');
     }
