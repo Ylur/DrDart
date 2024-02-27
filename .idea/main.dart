@@ -29,7 +29,7 @@ void main() {
   room3.exits = {'south': room1, 'east': room4};
   room4.exits = {'north': room2, 'east': room3};
 
-// Update exits as needed based on the initial setup.
+//
   room2.exits['north'] = room3;
   room1.exits['south'] = room2;
   room3.exits['west'] = room4;
