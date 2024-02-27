@@ -14,29 +14,17 @@ class Player {
 }
 
 void main() {
-
-
-
-// Tegund herberja og númer.
+  // Herbergi
   var room1 = Room('You are in a dark room.', {});
   var room2 = Room('You are in a bright room.', {});
   var room3 = Room('You are in a mysterious room.', {});
   var room4 = Room('You are in a cozy room.', {});
 
-// Exits.
+  // Herbergi tengd við útganga
   room1.exits = {'north': room4, 'east': room2};
   room2.exits = {'east': room3, 'west': room1};
   room3.exits = {'west': room1, 'east': room4};
   room4.exits = {'north': room2, 'east': room3};
-
-//
-  room2.exits['north'] = room3;
-  room1.exits['south'] = room2;
-  room3.exits['west'] = room4;
-  room4.exits['west'] = room1;
-
-
-
 
   var DrDart = Player(room1);
 
@@ -44,25 +32,31 @@ void main() {
 
   while (true) {
     print('\n${DrDart.currentRoom.description}');
-    stdout.write('Choose your next move (type exit to quit): ');
+    stdout.write('Choose your next move, type "exit" to quit, "North", "South", "East", "West" to enter rooms: ');
     var moveOut = stdin.readLineSync()?.toLowerCase() ?? '';
 
     if (moveOut == 'exit') {
       print('I thought so!');
       break;
-    } else
-    if (moveOut == 'Open door') {
-      print('You opened the door and are outside now!');
-      break;
-    }
-
-
-
-
-    if (DrDart.currentRoom.exits.containsKey(moveOut)) {
+    } else if (moveOut == 'open door') {
+      if (DrDart.currentRoom == room3) {
+        print('You opened the door and are outside now!');
+        break;
+      } else {
+        print('There is no door to open here.');
+      }
+    } else if (DrDart.currentRoom.exits.containsKey(moveOut)) {
       DrDart.currentRoom = DrDart.currentRoom.exits[moveOut]!;
-    } else {
-      print('Invalid move. Try again.');
+      switch (moveOut) {
+        case 'north':
+        case 'south':
+        case 'east':
+        case 'west':
+          print('There is no exit in that direction. Try again.');
+          break;
+        default:
+          print('Invalid move. Try again.');
+      }
     }
   }
 }
